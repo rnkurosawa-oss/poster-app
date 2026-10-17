@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ポスター一覧 | Poster Library</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="index.html">POSTER<span>LIBRARY</span></a>
+    <nav class="site-nav">
+      <a href="index.html" class="active">ポスター一覧</a>
+      <a href="admin.html">管理ページ</a>
+    </nav>
+    <button class="btn btn-primary" id="openUpload" type="button">＋ アップロード</button>
+  </header>
+
+  <main>
+    <div class="chips" id="chips"></div>
+    <div class="toolbar">
+      <input type="search" class="search" id="search" placeholder="タイトル・ファイル名・メモで検索">
+      <select id="sort" aria-label="並び順">
+        <option value="new">新しい順</option>
+        <option value="old">古い順</option>
+        <option value="title">タイトル順</option>
+      </select>
+      <span class="hint" id="resultCount"></span>
+    </div>
+    <div class="grid" id="grid"></div>
+    <div class="empty" id="empty" hidden>
+      <p id="emptyText">まだポスターが登録されていません</p>
+      <button class="btn btn-primary" type="button" data-open-upload>＋ 最初のポスターをアップロード</button>
+    </div>
+  </main>
+
+  <!-- upload -->
+  <dialog id="uploadDlg">
+    <form id="uploadForm" method="dialog">
+      <div class="dlg-head">
+        <h2>ポスターをアップロード</h2>
+        <button class="dlg-close" type="button" data-close aria-label="閉じる">×</button>
+      </div>
+      <div class="dlg-body">
+        <div class="form-cols">
+          <div>
+            <div class="field">
+              <div class="section-label">印刷用データ <span class="req">*</span><span class="tag dl">ダウンロード可</span></div>
+              <label class="dropzone" id="fileZone">
+                <input type="file" id="fileInput">
+                <strong id="fileLabel">ドラッグ＆ドロップ</strong>
+                <span id="fileSub">またはクリックして選択（AI / PDF / PSD / ZIP など）</span>
+              </label>
+            </div>
+            <label class="field"><span>タイトル <span class="req">*</span></span>
+              <input type="text" id="title" required>
+            </label>
+            <label class="field"><span>カテゴリー</span>
+              <select id="category"></select>
+            </label>
+            <label class="field"><span>仕上がりサイズ</span>
+              <input type="text" id="size" list="sizeList" placeholder="例: A2, B1, 594×841mm">
+            </label>
+            <label class="field"><span>メモ</span>
+              <textarea id="note" placeholder="印刷会社、部数、掲示場所など"></textarea>
+            </label>
+          </div>
+          <div class="thumb-side">
+            <div class="section-label">一覧表示用データ<span class="tag">表示のみ</span></div>
+            <label class="display-drop" id="displayZone">
+              <input type="file" id="displayInput" accept=".jpg,.jpeg,.png,.gif,.webp,.bmp,.pdf,.ai">
+              <div class="thumb-preview" id="displayPreview"></div>
+            </label>
+            <div class="thumb-status" id="displayStatus">クリックまたはドロップで選択<br>（JPG / PNG / PDF など）</div>
+          </div>
+        </div>
+        <div class="progress" id="uploadProgress" hidden><div></div></div>
+      </div>
+      <div class="dlg-foot">
+        <button class="btn" type="button" data-close>キャンセル</button>
+        <button class="btn btn-primary" type="submit" id="uploadSubmit">アップロード</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- detail -->
+  <dialog id="detailDlg" class="wide">
+    <div class="dlg-head">
+      <h2>ポスター詳細</h2>
+      <button class="dlg-close" type="button" data-close aria-label="閉じる">×</button>
+    </div>
+    <div class="dlg-body" id="detailBody"></div>
+  </dialog>
+
+  <datalist id="sizeList">
+    <option value="A0"><option value="A1"><option value="A2"><option value="A3"><option value="A4">
+    <option value="B0"><option value="B1"><option value="B2"><option value="B3"><option value="B4">
+  </datalist>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/index.js"></script>
+</body>
+</html>
